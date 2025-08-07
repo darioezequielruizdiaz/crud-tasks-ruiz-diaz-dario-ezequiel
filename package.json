@@ -1,15 +1,17 @@
 {
   "name": "crud-tasks-ruiz-diaz-dario-ezequiel",
   "version": "1.0.0",
-  "description": "",
+  "description": "Crud de tareas con Express, Sequelize y MySQL",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --watch app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^5.5.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mysql2": "^3.14.3",
