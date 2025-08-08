@@ -47,7 +47,7 @@ export const getTaskById = async (req, res) => {
 
   try {
 
-    const Task = await Task.findByPk(id);
+    const task = await Task.findByPk(id);
     if (!task) {
       return res.status(404).json({ message: "❓ Tarea no encontrada ❓" });
     }

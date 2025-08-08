@@ -1,8 +1,8 @@
 import { sequelize } from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-const Task = sequelize.define(
-    "tasks", {
+const User = sequelize.define(
+    "users", {
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,
@@ -19,4 +19,4 @@ const Task = sequelize.define(
     }
 )
 
-export default Task;
+export default User;
