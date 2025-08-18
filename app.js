@@ -6,6 +6,8 @@ import { startDB } from "./src/config/database.js";
 // importacion de las rutas
 import routerTask from "./src/routers/task.routes.js";
 import routerUser from "./src/routers/user.routes.js";
+import routerProfile from "./src/routers/profile.routes.js";
+import routerTag from "./src/routers/tag.routes.js";
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use(express.json());
 
 app.use("/api", routerTask);
 app.use("/api", routerUser);
+app.use("/api", routerProfile);
+app.use("/api", routerTag);
 
 // Hacemos que la app escuche el puerto e iniciamos la base de datos
 app.listen(PORT, async () => {

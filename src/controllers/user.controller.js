@@ -1,4 +1,4 @@
-import User from "../models/user.model.js";
+import { User, Task } from "../models/index.js";
 import userValidator from "../validators/user.validator.js";
 
 // Crear User
@@ -24,7 +24,7 @@ export const createUser = async (req, res) => {
 
   } catch (error) {
 
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: error.message });
 
   }
 };
@@ -32,10 +32,14 @@ export const createUser = async (req, res) => {
 // Obtener todos las Users
 export const getAllUsers = async (req, res) => {
   try {
-
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: {
+        model: Task,
+        attributes: ["id", "title", "description", "isComplete"]
+      }
+    });
     return res.json(users);
-
+    
   } catch (error) {
 
     return res.status(500).json({ error: error.message });
@@ -53,8 +57,12 @@ export const getUserById = async (req, res) => {
   }
 
   try {
-
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, {
+      include: {
+        model: Task,
+        attributes: ["id", "title", "description", "isComplete"]
+      }
+    });
     if (!user) {
       return res.status(404).json({ message: "❓ Usuario no encontrado ❓" });
     }
@@ -63,7 +71,7 @@ export const getUserById = async (req, res) => {
   } catch (error) {
 
     return res.status(500).json({ error: error.message });
-    
+
   }
 };
 
@@ -125,7 +133,7 @@ export const deleteUser = async (req, res) => {
 
   } catch (error) {
 
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: error.message });
 
   }
 };

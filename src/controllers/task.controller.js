@@ -1,35 +1,46 @@
-import Task from "../models/task.model.js";
+import { User, Task } from "../models/index.js"
 import taskValidator from "../validators/task.validator.js";
 
 // Crear Taks
 export const createTask = async (req, res) => {
-  const { title, description, isComplete } = req.body;
+  const { title, description, isComplete, user_id } = req.body;
 
-  
+  if (!user_id) {
+    return res.status(400).json({ error: "🚫 La tarea debe estar asociada a un usuario 🚫" });
+  }
+
   const errores = taskValidator({ title, description, isComplete });
-  
   if (errores.length > 0) {
     return res.status(400).json({ errores });
   }
-  
+
   try {
+    const user = await User.findByPk(user_id);
+    if (!user) {
+      return res.status(404).json({ error: "🚫 Usuario no encontrado 🚫" });
+    }
+
     const existingTask = await Task.findOne({ where: { title } });
-    
     if (existingTask) {
       return res.status(409).json({ error: "🚫 Ya existe una tarea con ese titulo 🚫" });
     }
-    
-    const task = await Task.create({ title, description, isComplete });
+
+    const task = await Task.create({ title, description, isComplete, user_id });
     return res.status(201).json(task);
   } catch (error) {
-    return res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
 // Obtener todos las Tasks
 export const getAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.findAll();
+    const tasks = await Task.findAll({
+      include: {
+        model: User,
+        attributes: ["id", "name", "email"]
+      }
+    });
     return res.json(tasks);
   } catch (error) {
     return res.status(500).json({ error: error.message });
@@ -46,17 +57,18 @@ export const getTaskById = async (req, res) => {
   }
 
   try {
-
-    const task = await Task.findByPk(id);
+    const task = await Task.findByPk(id, {
+      include: {
+        model: User,
+        attributes: ["id", "name", "email"]
+      }
+    });
     if (!task) {
       return res.status(404).json({ message: "❓ Tarea no encontrada ❓" });
     }
     return res.json(task);
-
   } catch (error) {
-
     return res.status(500).json({ error: error.message });
-    
   }
 };
 
