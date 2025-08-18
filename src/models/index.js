@@ -12,5 +12,6 @@ Profile.belongsTo(User, { foreignKey: "user_id" });
 
 export {
   User,
-  Task
+  Task,
+  Profile
 };
