@@ -1,4 +1,5 @@
-import { User, Task } from "../models/index.js";
+import User from "../models/user.model.js";
+import Task from "../models/task.model.js";
 import userValidator from "../validators/user.validator.js";
 
 // Crear User
