@@ -1,5 +1,6 @@
 import { sequelize } from "../config/database.js";
 import { DataTypes } from "sequelize";
+import User from "./user.model.js";
 
 const Profile = sequelize.define(
     "profiles", {
@@ -14,5 +15,9 @@ const Profile = sequelize.define(
         }
     }
 );
+
+// Relacion uno a uno: User - Profile
+User.hasOne(Profile, { foreignKey: "user_id" });
+Profile.belongsTo(User, { foreignKey: "user_id" });
 
 export default Profile;

@@ -21,6 +21,6 @@ const Task = sequelize.define(
             allowNull: false
         }
     }
-)
+);
 
 export default Task;
