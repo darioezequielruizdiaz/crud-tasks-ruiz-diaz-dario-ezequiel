@@ -16,8 +16,11 @@ const TaskTag = sequelize.define(
     }
 );
 
-// Relacion muchos a muchos: Task - Tag
-Task.belongsToMany(Tag, { through: TaskTag, foreignKey: "task_id" });
-Tag.belongsToMany(Task, { through: TaskTag, foreignKey: "tag_id" });
+// 👇 Asociaciones directas
+TaskTag.belongsTo(Task, { foreignKey: "task_id" });
+Task.hasMany(TaskTag, { foreignKey: "task_id" });
+
+TaskTag.belongsTo(Tag, { foreignKey: "tag_id" });
+Tag.hasMany(TaskTag, { foreignKey: "tag_id" });
 
 export default TaskTag;
