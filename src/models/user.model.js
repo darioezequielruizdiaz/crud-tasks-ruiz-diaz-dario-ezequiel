@@ -21,7 +21,14 @@ const User = sequelize.define(
 )
 
 // Relacion uno a muchos: User - Task
-User.hasMany(Task, { foreignKey: "user_id" });
-Task.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Task, { 
+    foreignKey: "user_id",
+    onDelete: "CASCADE",
+    as: "task"
+ });
+Task.belongsTo(User, { 
+    foreignKey: "user_id",
+    as: "user" 
+});
 
 export default User;

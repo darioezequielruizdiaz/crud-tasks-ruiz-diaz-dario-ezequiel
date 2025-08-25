@@ -16,11 +16,27 @@ const TaskTag = sequelize.define(
     }
 );
 
-// 👇 Asociaciones directas
-TaskTag.belongsTo(Task, { foreignKey: "task_id" });
-Task.hasMany(TaskTag, { foreignKey: "task_id" });
+// Dolor
+TaskTag.belongsTo(Task, { 
+    foreignKey: "task_id", 
+    onDelete: "CASCADE",
+    as: "task"
+});
+Task.hasMany(TaskTag, { 
+    foreignKey: "task_id",
+    onDelete: "CASCADE",
+    as: "taskTags"
+});
 
-TaskTag.belongsTo(Tag, { foreignKey: "tag_id" });
-Tag.hasMany(TaskTag, { foreignKey: "tag_id" });
+TaskTag.belongsTo(Tag, { 
+    foreignKey: "tag_id",
+    onDelete: "CASCADE",
+    as: "tag"
+});
+Tag.hasMany(TaskTag, { 
+    foreignKey: "tag_id",
+    onDelete: "CASCADE",
+    as: "taskTags"
+});
 
 export default TaskTag;

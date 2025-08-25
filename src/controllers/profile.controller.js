@@ -28,7 +28,8 @@ export const getAllProfiles = async (req, res) => {
         const profiles = await Profile.findAll({
           include: { 
             model: User, 
-            attributes: ["id", "name", "email"] 
+            attributes: ["id", "name", "email"],
+            as: "user"
         }});
         return res.json(profiles);
 
